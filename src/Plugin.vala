@@ -15,11 +15,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Marlin.Plugins {
+namespace Files.Plugins {
     private class FileRollerMenuItem : Gtk.MenuItem {
-        private File[] files;
+        private GLib.File[] files;
 
-        public FileRollerMenuItem (File[] files) {
+        public FileRollerMenuItem (GLib.File[] files) {
             this.files = files;
             this.label = "Compress";
         }
@@ -44,12 +44,12 @@ namespace Marlin.Plugins {
     }
 
     public class FileRoller : Base {
-        public override void context_menu (Gtk.Widget widget, List<GOF.File> gof_files) {
+        public override void context_menu (Gtk.Widget widget, List<Files.File> gof_files) {
             if (gof_files == null)
                 return;
 
-            var files = new Gee.ArrayList<File>();
-            foreach (unowned GOF.File file in gof_files)
+            var files = new Gee.ArrayList<GLib.File>();
+            foreach (unowned Files.File file in gof_files)
                 if (file.location != null)
                     if (file.location.get_uri_scheme () == "recent")
                         files.add (GLib.File.new_for_uri (file.get_display_target_uri ()));
@@ -68,6 +68,6 @@ namespace Marlin.Plugins {
 
 }
 
-public Marlin.Plugins.Base module_init () {
-    return new Marlin.Plugins.FileRoller ();
+public Files.Plugins.Base module_init () {
+    return new Files.Plugins.FileRoller ();
 }
